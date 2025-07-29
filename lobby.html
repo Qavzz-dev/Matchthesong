@@ -1,212 +1,188 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lobby - Match the Song!</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Match the Song - Lobby</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
       font-family: 'Comic Sans MS', cursive, sans-serif;
-      background: linear-gradient(135deg, #faffb8, #ffe4e1, #a1f0ff, #baf8ba);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
+      margin: 0; padding: 20px;
+      background: linear-gradient(135deg, #faffb8, #ffe4e1, #a1f0ff);
       color: #333;
+      text-align: center;
     }
-
     header {
-      text-align: center;
-      padding: 30px 10px;
-      background: rgba(255, 255, 255, 0.7);
-      border-bottom: 5px solid #ff9ff3;
+      margin-bottom: 20px;
     }
-
-    header h1 {
-      font-size: 2.5rem;
+    h1 {
       color: #ff6ec7;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-      margin: 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     }
-
-    main {
-      display: flex;
-      flex: 1;
+    .lobby-box {
+      max-width: 400px;
+      margin: 0 auto 20px;
       padding: 20px;
-      gap: 20px;
-      flex-wrap: wrap;
+      background: rgba(255,255,255,0.85);
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
-
-    /* Lista graczy */
-    .players {
-      flex: 1;
-      min-width: 250px;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    .lobby-code {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: #ff6ec7;
+      letter-spacing: 3px;
+      margin: 20px 0;
     }
-
-    .players h2 {
-      font-size: 1.6rem;
-      margin-bottom: 15px;
+    .button {
+      background: linear-gradient(45deg, #ff9ff3, #a1f0ff);
+      border: none;
+      padding: 14px 40px;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      cursor: pointer;
       color: #333;
-      text-align: center;
+      font-weight: bold;
+      margin: 10px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-
-    .player {
+    .button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(255,159,243,0.5);
+    }
+    .player-list {
+      text-align: left;
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 15px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .player-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
-      padding: 8px;
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 10px;
-      transition: transform 0.2s;
+      margin-bottom: 12px;
+      gap: 15px;
     }
-
-    .player:hover {
-      transform: scale(1.03);
-      background: rgba(255, 255, 255, 0.9);
-    }
-
-    .player img {
+    .player-item img {
       width: 50px;
       height: 50px;
       border-radius: 50%;
       border: 2px solid #ff6ec7;
     }
-
-    .player .name {
+    .player-name {
       font-weight: bold;
+      color: #6c00b0;
     }
-
-    .player .host {
-      font-size: 0.8rem;
-      color: #fff;
+    .host-label {
       background: #ff6ec7;
-      padding: 2px 6px;
-      border-radius: 6px;
+      color: white;
+      font-size: 0.8rem;
+      padding: 3px 8px;
+      border-radius: 12px;
       margin-left: auto;
     }
-
-    /* Panel kodu lobby */
-    .lobby-info {
-      flex: 1;
-      min-width: 250px;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 15px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    .lobby-info p {
-      margin: 10px 0;
-    }
-
-    .lobby-code {
-      font-size: 2rem;
-      color: #ff6ec7;
-      font-weight: bold;
-      margin: 10px 0 20px;
-      letter-spacing: 2px;
-    }
-
-    .button {
-      display: inline-block;
-      background: linear-gradient(45deg, #ff9ff3, #a1f0ff);
-      border: none;
-      padding: 12px 30px;
-      margin: 10px;
-      font-size: 1.1rem;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Opis gry */
-    .game-description {
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.9);
-      border-top: 4px solid #ff9ff3;
-      text-align: center;
-    }
-
-    .game-description h3 {
-      margin-top: 0;
-      font-size: 1.5rem;
-      color: #ff6ec7;
-    }
-
-    footer {
-      text-align: center;
-      padding: 10px;
-      color: #555;
-      font-size: 0.9rem;
+    .your-label {
+      background: #a1f0ff;
+      color: #333;
+      font-size: 0.8rem;
+      padding: 3px 8px;
+      border-radius: 12px;
+      margin-left: auto;
     }
   </style>
 </head>
 <body>
   <header>
     <h1>🎵 Match the Song - Lobby 🎵</h1>
+    <p>Udostępnij kod znajomym, aby dołączyli do gry!</p>
   </header>
 
-  <main>
-    <div class="players">
-      <h2>Gracze</h2>
-      <div class="player">
-        <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762774703210618/jaguar.png" alt="Avatar">
-        <span class="name">TwójNick</span>
-        <span class="host">HOST</span>
-      </div>
-      <div class="player">
-        <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762775529492592/bear.png" alt="Avatar">
-        <span class="name">Player1</span>
-      </div>
-      <div class="player">
-        <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762776032804975/rabbit.png" alt="Avatar">
-        <span class="name">Player2</span>
-      </div>
-    </div>
-
-    <div class="lobby-info">
-      <p>Kod lobby:</p>
-      <div class="lobby-code" id="lobbyCode">ABC123</div>
-      <button class="button" onclick="copyCode()">📋 Skopiuj kod</button>
-      <button class="button" onclick="startGame()">🚀 Start gry</button>
-    </div>
-  </main>
-
-  <div class="game-description">
-    <h3>O co chodzi w tej grze?</h3>
-    <p>🎧 Na ekranie pojawi się sytuacja lub temat.</p>
-    <p>🎵 Twoim zadaniem jest wkleić link do piosenki z YouTube, która najlepiej pasuje do tej sytuacji!</p>
-    <p>🏆 Gracze głosują, a najlepsze wybory zdobywają punkty.</p>
+  <div class="lobby-box">
+    <p>Twój kod lobby:</p>
+    <div class="lobby-code" id="lobbyCode">------</div>
+    <button class="button" onclick="copyCode()">Skopiuj kod</button>
+    <button class="button" onclick="startGame()">Start gry</button>
   </div>
 
-  <footer>
-    <p>© 2025 Match the Song</p>
-  </footer>
+  <div class="player-list" id="playerList">
+    <p><strong>Gracze w lobby:</strong></p>
+  </div>
 
   <script>
+    // Prosty generator losowego kodu lobby
+    function generateLobbyCode() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let code = '';
+      for (let i=0; i<6; i++) {
+        code += chars.charAt(Math.floor(Math.random()*chars.length));
+      }
+      return code;
+    }
+
+    // Generujemy i wyświetlamy kod
+    const lobbyCode = generateLobbyCode();
+    document.getElementById('lobbyCode').textContent = lobbyCode;
+
+    // Przykładowa lista graczy
+    const players = [
+      {nickname: localStorage.getItem('playerNickname') || 'Nieznany', avatar: localStorage.getItem('playerAvatar') || 'jaguar', isHost: true},
+      {nickname: 'Kolega1', avatar: 'bear', isHost: false},
+      {nickname: 'Kolega2', avatar: 'rabbit', isHost: false},
+    ];
+
+    const avatarMap = {
+      jaguar: "https://cdn.discordapp.com/attachments/1377693579161632788/1399762774703210618/jaguar.png",
+      meerkat: "https://cdn.discordapp.com/attachments/1377693579161632788/1399762775139684372/meerkat.png",
+      bear: "https://cdn.discordapp.com/attachments/1377693579161632788/1399762775529492592/bear.png",
+      rabbit: "https://cdn.discordapp.com/attachments/1377693579161632788/1399762776032804975/rabbit.png",
+      chicken: "https://cdn.discordapp.com/attachments/1377693579161632788/1399762776490119249/chicken.png"
+    };
+
+    // Renderujemy listę graczy w lobby
+    const playerListEl = document.getElementById('playerList');
+
+    players.forEach(player => {
+      const div = document.createElement('div');
+      div.className = 'player-item';
+
+      const img = document.createElement('img');
+      img.src = avatarMap[player.avatar] || avatarMap['jaguar'];
+      img.alt = player.nickname;
+
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'player-name';
+      nameSpan.textContent = player.nickname;
+
+      div.appendChild(img);
+      div.appendChild(nameSpan);
+
+      if (player.isHost) {
+        const hostLabel = document.createElement('span');
+        hostLabel.className = 'host-label';
+        hostLabel.textContent = 'Host';
+        div.appendChild(hostLabel);
+      } else if (player.nickname === localStorage.getItem('playerNickname')) {
+        const yourLabel = document.createElement('span');
+        yourLabel.className = 'your-label';
+        yourLabel.textContent = 'Twój nick';
+        div.appendChild(yourLabel);
+      }
+
+      playerListEl.appendChild(div);
+    });
+
     function copyCode() {
-      const code = document.getElementById('lobbyCode').textContent;
-      navigator.clipboard.writeText(code).then(() => {
-        alert("Skopiowano kod: " + code);
+      navigator.clipboard.writeText(lobbyCode).then(() => {
+        alert('Skopiowano kod: ' + lobbyCode);
       });
     }
 
     function startGame() {
-      alert("Gra się zaczyna! (Tu dodamy logikę startu).");
+      alert('Start gry! (tu dodaj swoją logikę gry)');
     }
   </script>
 </body>
 </html>
+
