@@ -1,83 +1,80 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Match the Song - Gra</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match the Song – Strona Główna</title>
   <style>
     body {
+      margin:0; padding:20px;
       font-family: 'Comic Sans MS', cursive, sans-serif;
-      margin: 0; padding: 20px;
       background: linear-gradient(135deg, #faffb8, #ffe4e1, #a1f0ff);
-      color: #333;
       text-align: center;
     }
-    header {
-      margin-bottom: 30px;
-    }
-    h1 {
+
+    header h1 {
+      font-size: 2.5rem;
       color: #ff6ec7;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
     }
-    .user-info {
-      margin-bottom: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
+
+    .user-card {
+      display: inline-block;
+      background: rgba(255,255,255,0.9);
+      padding: 20px 25px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      margin-bottom: 25px;
     }
-    .user-info img {
-      width: 80px;
-      height: 80px;
+
+    .user-card img {
+      width: 90px; height: 90px;
       border-radius: 50%;
       border: 3px solid #ff6ec7;
+      margin-bottom: 10px;
     }
-    .user-info span {
-      font-size: 1.5rem;
-      font-weight: bold;
+
+    .user-card p {
+      font-size: 1.3rem;
       color: #6c00b0;
+      font-weight: bold;
     }
+
     button {
       background: linear-gradient(45deg, #ff9ff3, #a1f0ff);
+      padding: 14px 40px;
       border: none;
-      padding: 14px 50px;
-      font-size: 1.4rem;
-      border-radius: 35px;
+      border-radius: 30px;
+      font-size: 1.2rem;
       cursor: pointer;
       color: #333;
       font-weight: bold;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(255,159,243,0.6);
-    }
+
+    button:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(255,159,243,0.5); }
   </style>
 </head>
 <body>
   <script>
-    // Sprawdzamy, czy jest nick i avatar, jeśli nie to wracamy na start
     const nickname = localStorage.getItem('playerNickname');
     const avatar = localStorage.getItem('playerAvatar');
-    if (!nickname || !avatar) {
-      window.location.href = 'start.html';
-    }
+    if (!nickname || !avatar) { window.location.href = 'start.html'; }
   </script>
 
   <header>
-    <h1>🎵 Match the Song! 🎵</h1>
+    <h1>🎵 Match the Song 🎵</h1>
   </header>
 
-  <div class="user-info">
-    <img id="avatarImg" src="" alt="Avatar" />
-    <span id="nicknameDisplay"></span>
+  <div class="user-card">
+    <img id="avatarImg" src="" alt="Avatar">
+    <p id="nicknameDisplay"></p>
   </div>
 
-  <button onclick="location.href='lobby.html'">Dołącz do lobby / Stwórz lobby</button>
+  <button onclick="location.href='lobby.html'">🎮 Dołącz do lobby</button>
 
   <script>
-    // Ustawiamy avatar i nick na stronie
     const avatarMap = {
       jaguar: "https://cdn.discordapp.com/attachments/1377693579161632788/1399762774703210618/jaguar.png",
       meerkat: "https://cdn.discordapp.com/attachments/1377693579161632788/1399762775139684372/meerkat.png",
@@ -85,8 +82,7 @@
       rabbit: "https://cdn.discordapp.com/attachments/1377693579161632788/1399762776032804975/rabbit.png",
       chicken: "https://cdn.discordapp.com/attachments/1377693579161632788/1399762776490119249/chicken.png"
     };
-
-    document.getElementById('avatarImg').src = avatarMap[avatar] || "";
+    document.getElementById('avatarImg').src = avatarMap[avatar];
     document.getElementById('nicknameDisplay').textContent = nickname;
   </script>
 </body>
