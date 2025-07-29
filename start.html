@@ -1,50 +1,25 @@
-<script>
-  // Czyścimy localStorage przy wejściu na startową stronę (nowa sesja)
-  localStorage.removeItem('playerNickname');
-  localStorage.removeItem('playerAvatar');
-</script>
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wybierz Nick i Avatar 🎭</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Start - Wybierz nick i avatar</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
+      margin:0; padding:0;
       font-family: 'Comic Sans MS', cursive, sans-serif;
       background: linear-gradient(135deg, #ffe4e1, #a1f0ff, #faffb8);
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
+      color:#333;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+      text-align:center;
     }
-
-    header {
-      margin-bottom: 30px;
-    }
-
-    h1 {
-      font-size: 3rem;
-      color: #ff6ec7;
-      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-      margin-bottom: 10px;
-    }
-
-    p.subtitle {
-      font-size: 1.2rem;
-      color: #555;
-      margin: 0;
-    }
-
+    h1 { color:#ff6ec7; text-shadow: 2px 2px 6px rgba(0,0,0,0.2); }
     input {
-      font-size: 1.3rem;
-      padding: 12px;
+      font-size: 1.3rem; padding: 12px;
       border-radius: 25px;
       border: 2px solid #ff9ff3;
       text-align: center;
@@ -53,103 +28,74 @@
       margin: 20px 0;
       transition: box-shadow 0.3s ease, border 0.3s ease;
     }
-
     input:focus {
       box-shadow: 0 0 10px #ff9ff3;
       border: 2px solid #ff6ec7;
     }
-
     .avatars {
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      flex-wrap: wrap;
-      margin: 20px auto 30px;
+      display:flex; gap: 25px; flex-wrap:wrap; justify-content:center; margin: 20px auto 30px;
     }
-
     .avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 4px solid transparent;
-      background: white;
-      padding: 5px;
+      width: 100px; height: 100px; border-radius: 50%;
+      cursor:pointer; border: 4px solid transparent;
+      background: white; padding:5px;
       transition: transform 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       object-fit: cover;
     }
-
     .avatar:hover {
       transform: scale(1.1);
       border-color: #ff6ec7;
-      box-shadow: 0 0 15px rgba(255, 110, 199, 0.8);
+      box-shadow: 0 0 15px rgba(255,110,199,0.8);
     }
-
     .avatar.selected {
       border-color: #6c00b0;
-      box-shadow: 0 0 20px rgba(108, 0, 176, 0.9);
+      box-shadow: 0 0 20px rgba(108,0,176,0.9);
       transform: scale(1.05);
     }
-
     button {
       background: linear-gradient(45deg, #ff9ff3, #a1f0ff);
-      border: none;
-      padding: 14px 50px;
-      font-size: 1.4rem;
-      border-radius: 35px;
-      cursor: pointer;
-      color: #333;
-      font-weight: bold;
+      border:none; padding:14px 50px;
+      font-size:1.4rem; border-radius:35px;
+      cursor:pointer; color:#333; font-weight:bold;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     }
-
     button:hover:not(:disabled) {
       transform: scale(1.08);
-      box-shadow: 0 6px 20px rgba(255, 159, 243, 0.6);
+      box-shadow: 0 6px 20px rgba(255,159,243,0.6);
     }
-
     button:disabled {
       background: #ddd;
       cursor: not-allowed;
       box-shadow: none;
     }
-
-    footer {
-      margin-top: 40px;
-      color: #555;
-      font-size: 0.9rem;
-    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🎵 Match the Song! 🎵</h1>
-    <p class="subtitle">Wybierz swój nick i bohatera, aby zacząć grę!</p>
-  </header>
-  
-  <input type="text" id="nickname" placeholder="Wpisz swój nick" maxlength="20">
+  <script>
+    // Czyścimy zapisane dane przy wejściu na start
+    localStorage.removeItem('playerNickname');
+    localStorage.removeItem('playerAvatar');
+  </script>
+
+  <h1>🎵 Match the Song! 🎵</h1>
+  <input type="text" id="nickname" placeholder="Wpisz swój nick" maxlength="20" />
   
   <p>Wybierz avatar:</p>
   <div class="avatars" id="avatars">
-    <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762774703210618/jaguar.png" class="avatar" data-avatar="jaguar">
-    <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762775139684372/meerkat.png" class="avatar" data-avatar="meerkat">
-    <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762775529492592/bear.png" class="avatar" data-avatar="bear">
-    <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762776032804975/rabbit.png" class="avatar" data-avatar="rabbit">
-    <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762776490119249/chicken.png" class="avatar" data-avatar="chicken">
+    <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762774703210618/jaguar.png" class="avatar" data-avatar="jaguar" />
+    <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762775139684372/meerkat.png" class="avatar" data-avatar="meerkat" />
+    <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762775529492592/bear.png" class="avatar" data-avatar="bear" />
+    <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762776032804975/rabbit.png" class="avatar" data-avatar="rabbit" />
+    <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762776490119249/chicken.png" class="avatar" data-avatar="chicken" />
   </div>
 
   <button id="startBtn" disabled>🚀 Zacznij grę</button>
-
-  <footer>
-    <p>© 2025 Match the Song </p>
-  </footer>
 
   <script>
     const nicknameInput = document.getElementById('nickname');
     const avatars = document.querySelectorAll('.avatar');
     const startBtn = document.getElementById('startBtn');
-
     let selectedAvatar = null;
 
     function checkReady() {
