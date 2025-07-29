@@ -1,3 +1,9 @@
+<script>
+  // Czyścimy localStorage przy wejściu na startową stronę (nowa sesja)
+  localStorage.removeItem('playerNickname');
+  localStorage.removeItem('playerAvatar');
+</script>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -136,7 +142,7 @@
   <button id="startBtn" disabled>🚀 Zacznij grę</button>
 
   <footer>
-    <p>© 2025 Match the Song made by QAVZZ</p>
+    <p>© 2025 Match the Song </p>
   </footer>
 
   <script>
