@@ -1,3 +1,11 @@
+<script>
+  const nickname = localStorage.getItem('playerNickname');
+  const avatar = localStorage.getItem('playerAvatar');
+  if (!nickname || !avatar) {
+    window.location.href = 'start.html'; // lub index.html, jeśli to Twoja strona startowa
+  }
+</script>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
