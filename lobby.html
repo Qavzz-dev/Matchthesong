@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lobby - Match the Song!</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #faffb8, #ffe4e1, #a1f0ff, #baf8ba);
+      color: #333;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 260px;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-right: 3px solid #ff9ff3;
+    }
+
+    .sidebar h2 {
+      margin: 0 0 20px;
+      color: #ff6ec7;
+    }
+
+    .user {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .user img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      box-shadow: 0 0 6px #ff6ec7aa;
+    }
+
+    .user .name {
+      flex-grow: 1;
+    }
+
+    .main {
+      flex-grow: 1;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .lobby-code {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #ff4dab;
+      text-shadow: 1px 1px 3px #d437a1;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .button {
+      background: linear-gradient(45deg, #ff9ff3, #a1f0ff);
+      border: none;
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      cursor: pointer;
+      margin: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .button:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 40px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>👥 Gracze</h2>
+    <div id="playerList"></div>
+  </aside>
+  <main class="main">
+    <p>Twój kod lobby:</p>
+    <div class="lobby-code" id="lobbyCode">------</div>
+    <button class="button" onclick="copyCode()">📋 Skopiuj kod</button>
+    <button class="button" onclick="startGame()">🚀 Start gry</button>
+    <footer>© 2025 Match the Song</footer>
+  </main>
+
+  <script>
+    const nick = localStorage.getItem('playerNickname');
+    const avatarId = localStorage.getItem('playerAvatar');
+    if (!nick || !avatarId) {
+      window.location.href = 'start.html';
+    }
+
+    const players = [
+      { nick, avatarId, isHost: true }
+    ];
+
+    const playerList = document.getElementById('playerList');
+    playerList.innerHTML = players.map(p => `
+      <div class="user">
+        <img src="https://i.pravatar.cc/80?img=${p.avatarId}" alt="Avatar">
+        <div class="name">${p.nick} ${p.isHost ? '<strong>(HOST)</strong>' : ''}</div>
+      </div>
+    `).join('');
+
+    const code = new URLSearchParams(window.location.search).get('code') || 'ABC123';
+    document.getElementById('lobbyCode').textContent = code;
+
+    function copyCode() {
+      navigator.clipboard.writeText(code).then(() => {
+        alert('Skopiowano kod: ' + code);
+      });
+    }
+
+    function startGame() {
+      alert('Gra się zaczyna!');
+    }
+  </script>
+</body>
+</html>
