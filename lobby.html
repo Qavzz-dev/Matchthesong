@@ -7,126 +7,205 @@
   <style>
     body {
       margin: 0;
+      padding: 0;
       font-family: 'Comic Sans MS', cursive, sans-serif;
       background: linear-gradient(135deg, #faffb8, #ffe4e1, #a1f0ff, #baf8ba);
-      color: #333;
       display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      color: #333;
     }
 
-    .sidebar {
-      width: 260px;
-      background: rgba(255, 255, 255, 0.8);
-      padding: 20px;
-      border-right: 3px solid #ff9ff3;
+    header {
+      text-align: center;
+      padding: 30px 10px;
+      background: rgba(255, 255, 255, 0.7);
+      border-bottom: 5px solid #ff9ff3;
     }
 
-    .sidebar h2 {
-      margin: 0 0 20px;
+    header h1 {
+      font-size: 2.5rem;
       color: #ff6ec7;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      margin: 0;
     }
 
-    .user {
+    main {
+      display: flex;
+      flex: 1;
+      padding: 20px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* Lista graczy */
+    .players {
+      flex: 1;
+      min-width: 250px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .players h2 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      color: #333;
+      text-align: center;
+    }
+
+    .player {
       display: flex;
       align-items: center;
-      margin-bottom: 12px;
+      gap: 12px;
+      margin-bottom: 10px;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 10px;
+      transition: transform 0.2s;
     }
 
-    .user img {
-      width: 40px;
-      height: 40px;
+    .player:hover {
+      transform: scale(1.03);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .player img {
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      margin-right: 10px;
-      box-shadow: 0 0 6px #ff6ec7aa;
+      border: 2px solid #ff6ec7;
     }
 
-    .user .name {
-      flex-grow: 1;
+    .player .name {
+      font-weight: bold;
     }
 
-    .main {
-      flex-grow: 1;
+    .player .host {
+      font-size: 0.8rem;
+      color: #fff;
+      background: #ff6ec7;
+      padding: 2px 6px;
+      border-radius: 6px;
+      margin-left: auto;
+    }
+
+    /* Panel kodu lobby */
+    .lobby-info {
+      flex: 1;
+      min-width: 250px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      padding: 20px;
       text-align: center;
-      padding: 40px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .lobby-info p {
+      margin: 10px 0;
     }
 
     .lobby-code {
-      font-size: 2.5rem;
+      font-size: 2rem;
+      color: #ff6ec7;
       font-weight: bold;
-      color: #ff4dab;
-      text-shadow: 1px 1px 3px #d437a1;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+      margin: 10px 0 20px;
+      letter-spacing: 2px;
     }
 
     .button {
+      display: inline-block;
       background: linear-gradient(45deg, #ff9ff3, #a1f0ff);
       border: none;
-      padding: 15px 40px;
-      font-size: 1.2rem;
-      border-radius: 50px;
+      padding: 12px 30px;
+      margin: 10px;
+      font-size: 1.1rem;
+      border-radius: 30px;
       cursor: pointer;
-      margin: 15px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .button:hover {
       transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Opis gry */
+    .game-description {
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-top: 4px solid #ff9ff3;
+      text-align: center;
+    }
+
+    .game-description h3 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      color: #ff6ec7;
     }
 
     footer {
-      margin-top: 40px;
+      text-align: center;
+      padding: 10px;
       color: #555;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
-  <aside class="sidebar">
-    <h2>👥 Gracze</h2>
-    <div id="playerList"></div>
-  </aside>
-  <main class="main">
-    <p>Twój kod lobby:</p>
-    <div class="lobby-code" id="lobbyCode">------</div>
-    <button class="button" onclick="copyCode()">📋 Skopiuj kod</button>
-    <button class="button" onclick="startGame()">🚀 Start gry</button>
-    <footer>© 2025 Match the Song</footer>
+  <header>
+    <h1>🎵 Match the Song - Lobby 🎵</h1>
+  </header>
+
+  <main>
+    <div class="players">
+      <h2>Gracze</h2>
+      <div class="player">
+        <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762774703210618/jaguar.png" alt="Avatar">
+        <span class="name">TwójNick</span>
+        <span class="host">HOST</span>
+      </div>
+      <div class="player">
+        <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762775529492592/bear.png" alt="Avatar">
+        <span class="name">Player1</span>
+      </div>
+      <div class="player">
+        <img src="https://cdn.discordapp.com/attachments/1377693579161632788/1399762776032804975/rabbit.png" alt="Avatar">
+        <span class="name">Player2</span>
+      </div>
+    </div>
+
+    <div class="lobby-info">
+      <p>Kod lobby:</p>
+      <div class="lobby-code" id="lobbyCode">ABC123</div>
+      <button class="button" onclick="copyCode()">📋 Skopiuj kod</button>
+      <button class="button" onclick="startGame()">🚀 Start gry</button>
+    </div>
   </main>
 
+  <div class="game-description">
+    <h3>O co chodzi w tej grze?</h3>
+    <p>🎧 Na ekranie pojawi się sytuacja lub temat.</p>
+    <p>🎵 Twoim zadaniem jest wkleić link do piosenki z YouTube, która najlepiej pasuje do tej sytuacji!</p>
+    <p>🏆 Gracze głosują, a najlepsze wybory zdobywają punkty.</p>
+  </div>
+
+  <footer>
+    <p>© 2025 Match the Song</p>
+  </footer>
+
   <script>
-    const nick = localStorage.getItem('playerNickname');
-    const avatarId = localStorage.getItem('playerAvatar');
-    if (!nick || !avatarId) {
-      window.location.href = 'start.html';
-    }
-
-    const players = [
-      { nick, avatarId, isHost: true }
-    ];
-
-    const playerList = document.getElementById('playerList');
-    playerList.innerHTML = players.map(p => `
-      <div class="user">
-        <img src="https://i.pravatar.cc/80?img=${p.avatarId}" alt="Avatar">
-        <div class="name">${p.nick} ${p.isHost ? '<strong>(HOST)</strong>' : ''}</div>
-      </div>
-    `).join('');
-
-    const code = new URLSearchParams(window.location.search).get('code') || 'ABC123';
-    document.getElementById('lobbyCode').textContent = code;
-
     function copyCode() {
+      const code = document.getElementById('lobbyCode').textContent;
       navigator.clipboard.writeText(code).then(() => {
-        alert('Skopiowano kod: ' + code);
+        alert("Skopiowano kod: " + code);
       });
     }
 
     function startGame() {
-      alert('Gra się zaczyna!');
+      alert("Gra się zaczyna! (Tu dodamy logikę startu).");
     }
   </script>
 </body>
