@@ -1,135 +1,120 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Match the Song - Lobby</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match the Song – Lobby</title>
   <style>
     body {
+      margin:0; padding:20px;
       font-family: 'Comic Sans MS', cursive, sans-serif;
-      margin: 0; padding: 20px;
       background: linear-gradient(135deg, #faffb8, #ffe4e1, #a1f0ff);
-      color: #333;
-      text-align: center;
+      text-align:center;
     }
-    header {
-      margin-bottom: 20px;
-    }
+
     h1 {
       color: #ff6ec7;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
     }
+
     .lobby-box {
+      background: rgba(255,255,255,0.9);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       max-width: 400px;
       margin: 0 auto 20px;
-      padding: 20px;
-      background: rgba(255,255,255,0.85);
-      border-radius: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
+
     .lobby-code {
-      font-size: 2.2rem;
-      font-weight: bold;
+      font-size: 2rem;
       color: #ff6ec7;
-      letter-spacing: 3px;
-      margin: 20px 0;
-    }
-    .button {
-      background: linear-gradient(45deg, #ff9ff3, #a1f0ff);
-      border: none;
-      padding: 14px 40px;
-      font-size: 1.2rem;
-      border-radius: 30px;
-      cursor: pointer;
-      color: #333;
+      margin: 10px 0;
       font-weight: bold;
-      margin: 10px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(255,159,243,0.5);
-    }
+
     .player-list {
-      text-align: left;
-      max-width: 400px;
-      margin: 20px auto;
-      padding: 15px;
+      margin-top: 20px;
       background: rgba(255,255,255,0.9);
+      padding: 15px;
       border-radius: 15px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      text-align: left;
     }
+
     .player-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 12px;
+      display:flex;
+      align-items:center;
       gap: 15px;
+      margin-bottom: 12px;
     }
+
     .player-item img {
       width: 50px;
       height: 50px;
       border-radius: 50%;
       border: 2px solid #ff6ec7;
     }
+
     .player-name {
       font-weight: bold;
       color: #6c00b0;
     }
+
     .host-label {
       background: #ff6ec7;
       color: white;
+      padding: 2px 8px;
+      border-radius: 8px;
       font-size: 0.8rem;
-      padding: 3px 8px;
-      border-radius: 12px;
       margin-left: auto;
     }
-    .your-label {
-      background: #a1f0ff;
-      color: #333;
-      font-size: 0.8rem;
-      padding: 3px 8px;
-      border-radius: 12px;
-      margin-left: auto;
+
+    button {
+      background: linear-gradient(45deg, #ff9ff3, #a1f0ff);
+      border:none;
+      padding: 10px 30px;
+      border-radius: 20px;
+      font-size: 1rem;
+      cursor:pointer;
+      margin: 10px;
+      font-weight: bold;
+      transition: 0.2s;
     }
+
+    button:hover { transform: scale(1.05); }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🎵 Match the Song - Lobby 🎵</h1>
-    <p>Udostępnij kod znajomym, aby dołączyli do gry!</p>
-  </header>
-
+  <h1>🎵 Match the Song – Lobby</h1>
   <div class="lobby-box">
-    <p>Twój kod lobby:</p>
+    <p>Kod lobby:</p>
     <div class="lobby-code" id="lobbyCode">------</div>
-    <button class="button" onclick="copyCode()">Skopiuj kod</button>
-    <button class="button" onclick="startGame()">Start gry</button>
+    <button onclick="copyCode()">Kopiuj kod</button>
+    <button onclick="startGame()">Start gry</button>
   </div>
 
   <div class="player-list" id="playerList">
-    <p><strong>Gracze w lobby:</strong></p>
+    <p><strong>Gracze:</strong></p>
   </div>
 
   <script>
-    // Prosty generator losowego kodu lobby
     function generateLobbyCode() {
       const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
       let code = '';
-      for (let i=0; i<6; i++) {
-        code += chars.charAt(Math.floor(Math.random()*chars.length));
-      }
+      for (let i=0; i<6; i++) code += chars.charAt(Math.floor(Math.random()*chars.length));
       return code;
     }
-
-    // Generujemy i wyświetlamy kod
     const lobbyCode = generateLobbyCode();
     document.getElementById('lobbyCode').textContent = lobbyCode;
 
-    // Przykładowa lista graczy
     const players = [
-      {nickname: localStorage.getItem('playerNickname') || 'Nieznany', avatar: localStorage.getItem('playerAvatar') || 'jaguar', isHost: true},
-      {nickname: 'Kolega1', avatar: 'bear', isHost: false},
-      {nickname: 'Kolega2', avatar: 'rabbit', isHost: false},
+      {nickname: localStorage.getItem('playerNickname') || 'Ty', avatar: localStorage.getItem('playerAvatar') || 'jaguar', isHost: true},
+      {nickname: 'Gość1', avatar: 'bear', isHost: false}
     ];
 
     const avatarMap = {
@@ -140,49 +125,16 @@
       chicken: "https://cdn.discordapp.com/attachments/1377693579161632788/1399762776490119249/chicken.png"
     };
 
-    // Renderujemy listę graczy w lobby
-    const playerListEl = document.getElementById('playerList');
-
-    players.forEach(player => {
-      const div = document.createElement('div');
-      div.className = 'player-item';
-
-      const img = document.createElement('img');
-      img.src = avatarMap[player.avatar] || avatarMap['jaguar'];
-      img.alt = player.nickname;
-
-      const nameSpan = document.createElement('span');
-      nameSpan.className = 'player-name';
-      nameSpan.textContent = player.nickname;
-
-      div.appendChild(img);
-      div.appendChild(nameSpan);
-
-      if (player.isHost) {
-        const hostLabel = document.createElement('span');
-        hostLabel.className = 'host-label';
-        hostLabel.textContent = 'Host';
-        div.appendChild(hostLabel);
-      } else if (player.nickname === localStorage.getItem('playerNickname')) {
-        const yourLabel = document.createElement('span');
-        yourLabel.className = 'your-label';
-        yourLabel.textContent = 'Twój nick';
-        div.appendChild(yourLabel);
-      }
-
-      playerListEl.appendChild(div);
+    const list = document.getElementById('playerList');
+    players.forEach(p => {
+      const row = document.createElement('div');
+      row.className = 'player-item';
+      row.innerHTML = `<img src="${avatarMap[p.avatar]}"><span class="player-name">${p.nickname}</span>${p.isHost ? '<span class="host-label">Host</span>' : ''}`;
+      list.appendChild(row);
     });
 
-    function copyCode() {
-      navigator.clipboard.writeText(lobbyCode).then(() => {
-        alert('Skopiowano kod: ' + lobbyCode);
-      });
-    }
-
-    function startGame() {
-      alert('Start gry! (tu dodaj swoją logikę gry)');
-    }
+    function copyCode() { navigator.clipboard.writeText(lobbyCode).then(()=>alert('Skopiowano kod: '+lobbyCode)); }
+    function startGame() { alert('Start gry!'); }
   </script>
 </body>
 </html>
-
