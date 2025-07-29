@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Match the Song!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #ffe4e1, #a1f0ff, #faffb8, #baf8ba);
+      text-align: center;
+      color: #333;
+    }
+
+    header {
+      padding: 40px 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-bottom: 5px solid #ff9ff3;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: #ff6ec7;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #playerInfo {
+      margin: 20px 0;
+    }
+
+    #playerInfo img {
+      border-radius: 50%;
+      box-shadow: 0 0 12px #ff9ff3;
+    }
+
+    .button {
+      display: inline-block;
+      background: linear-gradient(45deg, #ff9ff3, #faffb8, #a1f0ff, #baf8ba);
+      border: none;
+      padding: 15px 40px;
+      margin: 10px;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: 2px solid #ff9ff3;
+      width: 150px;
+      text-align: center;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎵 Match the Song! 🎵</h1>
+    <div id="playerInfo"></div>
+    <p>Stwórz grę lub dołącz do lobby.</p>
+  </header>
+
+  <!-- Przycisk startowy -->
+  <button class="button" onclick="createLobby()">Rozpocznij grę</button>
+
+  <!-- Sekcja dołączania -->
+  <div>
+    <p>Masz kod lobby? Wpisz go poniżej:</p>
+    <input type="text" id="lobbyCode" maxlength="6" placeholder="123456">
+    <br><br>
+    <button class="button" onclick="joinLobby()">Dołącz do lobby</button>
+  </div>
+
+  <footer>
+    <p>© 2025 Match the Song</p>
+  </footer>
+
+  <script>
+    const nick = localStorage.getItem('playerNickname');
+    const avatarId = localStorage.getItem('playerAvatar');
+    const playerInfo = document.getElementById('playerInfo');
+
+    if (!nick || !avatarId) {
+      window.location.href = 'start.html';
+    } else {
+      playerInfo.innerHTML = `
+        <p>👤 <strong>${nick}</strong></p>
+        <img src="https://i.pravatar.cc/80?img=${avatarId}" alt="Avatar">
+      `;
+    }
+
+    function createLobby() {
+      const code = generateCode();
+      window.location.href = `lobby.html?code=${code}`;
+    }
+
+    function joinLobby() {
+      const code = document.getElementById("lobbyCode").value.trim();
+      if (code.length === 6) {
+        window.location.href = `lobby.html?code=${code}`;
+      } else {
+        alert("Kod lobby musi mieć 6 cyfr!");
+      }
+    }
+
+    function generateCode() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return code;
+    }
+  </script>
+</body>
+</html>
